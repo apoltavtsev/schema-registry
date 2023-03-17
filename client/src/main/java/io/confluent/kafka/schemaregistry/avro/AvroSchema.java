@@ -154,7 +154,7 @@ public class AvroSchema implements ParsedSchema {
         Schema schemaRef = parser.parse(schema);
         schemaRefs.add(schemaRef);
       }
-      canonicalString = schemaObj.toString(schemaRefs, false);
+      canonicalString = schemaObj.toString(false);
     }
     return canonicalString;
   }

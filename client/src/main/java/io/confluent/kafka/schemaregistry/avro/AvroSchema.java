@@ -70,12 +70,9 @@ public class AvroSchema implements ParsedSchema {
                     boolean isNew) {
     this.isNew = isNew;
     Schema.Parser parser = getParser();
-    for (String schema : resolvedReferences.values()) {
-      parser.parse(schema);
-    }
     this.schemaObj = parser.parse(schemaString);
-    this.references = Collections.unmodifiableList(references);
-    this.resolvedReferences = Collections.unmodifiableMap(resolvedReferences);
+    this.references = Collections.emptyList();
+    this.resolvedReferences = Collections.emptyMap();
     this.version = version;
   }
 
@@ -102,8 +99,8 @@ public class AvroSchema implements ParsedSchema {
     this.isNew = isNew;
     this.schemaObj = schemaObj;
     this.canonicalString = canonicalString;
-    this.references = references;
-    this.resolvedReferences = resolvedReferences;
+    this.references = Collections.emptyList();
+    this.resolvedReferences = Collections.emptyMap();
     this.version = version;
   }
 
@@ -150,10 +147,6 @@ public class AvroSchema implements ParsedSchema {
     if (canonicalString == null) {
       Schema.Parser parser = getParser();
       List<Schema> schemaRefs = new ArrayList<>();
-      for (String schema : resolvedReferences.values()) {
-        Schema schemaRef = parser.parse(schema);
-        schemaRefs.add(schemaRef);
-      }
       canonicalString = schemaObj.toString(false);
     }
     return canonicalString;
